@@ -1,12 +1,15 @@
 
 
 observeEvent(input$img_1, {
+  # wywołanie okna ładowania danych 
   progress1 <- shiny::Progress$new()
   on.exit(progress1$close())
   progress1$set(message = "waiting", value = 0)
   
   updateTabsetPanel(session, "navbar",
                     selected = "Education")
+  # kod ten po kliknięciu na kafelek przenosi do panelu edukacja i ładuje dane dla celu 1 
+  # kod jest powtarzalny dla wszystkich celów tak ja wywoływanie okienka ładowania
   updateSelectInput(session = session, "goal", selected = 1) 
   
   n <- 5 

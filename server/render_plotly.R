@@ -54,6 +54,7 @@ output$plot_inter <- renderPlotly({
   # if(seria$units == "PERCENT") {
   #   seria <- My_SDG$Value*0.001
   # }
+  # filtrowanie danych do wykresów 
   seria <- My_SDG %>%
     dplyr::filter(Goal == as.numeric(input$goal),
                   GeoAreaName %in% input$countries,
@@ -79,6 +80,8 @@ output$plot_inter <- renderPlotly({
   
 })
 # funkcja która ma zapisywać wykres do bazy danych wykresów które będą dodane do quizu
+# z powodów technicznych i braku dostępu do zewnętrznej bazy danych nie mogliśmy zaimlementować funkcji zapisu wykresów
+# i wykorzystanie ich w quizie 
 output$save <- downloadHandler(
   
   if(!is.null(plot$plot)){
@@ -95,15 +98,15 @@ output$save <- downloadHandler(
   
 )
 
- # wyświetlenie u Ui wykresó wybranych przez użytkownika 
+ # wyświetlenie u Ui wykresó wybranych przez użytkownika wyświetlrnie wyktesu kolumnowego
 output$plot_bar_inter <- renderPlotly({
-
+  
   seria_2 <- My_SDG %>% 
     dplyr::filter(Goal == as.numeric(input$goal),
                   GeoAreaName %in% input$countries,
                   SeriesDescription == input$description)#
  
-  
+  # miejsce tworzenia wykresów za pomocą pakiety plotly
   plotly::plot_ly(data = seria_2,
                   x = ~TimePeriod,
                   y = ~Value,
@@ -117,7 +120,7 @@ output$plot_bar_inter <- renderPlotly({
     )
   
 })
-
+# testowy wykres właściwe wykresy to liniowy i kolumnowy
 output$plot_scatter_inter <- renderPlotly({
   
   seria_3 <- My_SDG %>% 
