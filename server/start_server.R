@@ -1,6 +1,6 @@
 
-
 observeEvent(input$img_1, {
+  
   # wywołanie okna ładowania danych 
   progress1 <- shiny::Progress$new()
   on.exit(progress1$close())

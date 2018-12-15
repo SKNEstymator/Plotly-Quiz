@@ -31,15 +31,16 @@ sidebarLayout(
                                 "Life on land" = 15,
                                 "Peace, justice and strong institutions" = 16,
                                 "Partnership for the goals" = 17),
-                    selected = 1,
-                    # dodawanie wielu krajów
-                    multiple = TRUE),
+                    selected = 1),
         
         # wyświetlenie opcji wyboru opisu w panelu edukacja 
         uiOutput("description"),
         # wyświetlenie opcji wyboru kraju w panelu edukacja
         uiOutput("countries"),
         
+        uiOutput("group"),
+        
+        uiOutput("group2"),
         # pola wyboru opcji wykresu line , bar, scatter
         radioButtons(
           inputId = "chartType",
