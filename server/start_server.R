@@ -11,7 +11,6 @@ observeEvent(input$img_1, {
   # kod ten po kliknięciu na kafelek przenosi do panelu edukacja i ładuje dane dla celu 1 
   # kod jest powtarzalny dla wszystkich celów tak ja wywoływanie okienka ładowania
   updateSelectInput(session = session, "goal", selected = 1) 
-  
   n <- 5 
   for (i in 1:n) {
     progress1$inc(1/n, detail = "loading", i)
@@ -62,6 +61,7 @@ observeEvent(input$img_4, {
     progress4$inc(1/n, detail = "loading", i)
     Sys.sleep(0.1)
   }
+  show("skill")
 })
 observeEvent(input$img_5, {
   progress5 <- shiny::Progress$new()
@@ -168,6 +168,7 @@ observeEvent(input$img_11, {
     progress11$inc(1/n, detail = "loading", i)
     Sys.sleep(0.1)
   }
+  show("city")
 })
 observeEvent(input$img_12, {
   progress12 <- shiny::Progress$new()

@@ -11,6 +11,9 @@ library(plotly)
 library(shinyjs)
 library(openxlsx)
 library(jsonlite)
+library(shinyalert)
+have_ip()
+#readRDS("Baza_danych.rds")
 
 pyt <- read.xlsx(xlsxFile = "Pytania.xlsx",
                  colNames = TRUE) %>%

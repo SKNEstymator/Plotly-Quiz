@@ -38,6 +38,10 @@ sidebarLayout(
         # wyświetlenie opcji wyboru kraju w panelu edukacja
         uiOutput("countries"),
         
+        hidden(uiOutput("city")),
+        
+        hidden(uiOutput("skill")),
+        
         uiOutput("group"),
         
         uiOutput("group2"),

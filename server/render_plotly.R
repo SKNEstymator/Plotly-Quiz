@@ -47,41 +47,53 @@ output$countries <- renderUI({
 # dodanie opcji sortowania 
 output$group <- renderUI({
   goal <- My_SDG %>% 
-    dplyr::filter(Goal == (input$goal))
+    dplyr::filter(Goal == (input$goal), SeriesDescription == (input$description))
 
     selectInput("group",
-                label = "Group By:",
+                label = "Group by:",
                 choices = unique(goal$X.Age.,
-                                 goal$X.Cities.,
                                  goal$X.Education.level.,
                                  goal$X.Freq.,
                                  goal$X.Hazard.type.,
                                  goal$X.Level.Status.,
-                                 goal$X.Migratory.status.,
-                                 goal$X.Mode.of.transportation.,
-                                 goal$X.Name.of.international.institution.,
-                                 goal$X.Name.of.non.communicable.disease.,
-                                 goal$X.Tariff.regime..status..,
-                                 goal$X.Type.of.mobile.technology.,
-                                 goal$X.Type.of.ocuppation,
-                                 goal$X.Type.of.skill.,
-                                 goal$X.Type.of.speed.)) # razem z X.Type.of.product
+                                 goal$X.Migratory.status.
+                                 ))
+    # razem z X.Type.of.product
 #   selectInput("group",
 #               label = "Group by:",
 #               choices = unique(goal$Group))
 })
 
+output$city <- renderUI({
+  goal <- My_SDG %>% 
+    dplyr::filter(Goal == (input$goal), SeriesDescription == (input$description), GeoAreaName == (input$countries))
+  
+ 
+  selectInput("city",
+              label = "Cities",
+              choices = unique(goal$X.Cities.,
+                               goal$X.Name.of.international.institution.),
+              selected = unique(goal$X.Cities.), multiple = TRUE)
+    
+  
+})
+
+
 output$group2 <- renderUI({
 # dodanie opcji sortowania 
   goal <- My_SDG %>% 
-    dplyr::filter(Goal == (input$goal))
+    dplyr::filter(Goal == (input$goal), SeriesDescription == (input$description))
   
   selectInput("group2",
               label = "Group by:",
               choices = unique(goal$X.Sex.,
-                               goal$X.Type.of.product.,
-                               goal$X.location.,
-                               goal$X.Bounds.))
+                               if(unique(goal$X.Location.)) {
+                                 goal$X.Location.
+                               } else if (unique(goal$X.Bounds.)) {
+                                 goal$X.Bounds.
+                               } else {
+                               goal$X.Type.of.product.
+                              }))
   # goal <- goal_df %>%
   #   dplyr::filter(Goal == (input$goal))
   # 
@@ -90,54 +102,79 @@ output$group2 <- renderUI({
   #             choices = unique(goal$Group))
 })
 
+output$skill <- renderUI({
+  goal <- My_SDG %>% 
+    dplyr::filter(Goal == (input$goal), SeriesDescription == (input$description))
+  
+  selectInput("skill",
+              label = "skill",
+              choices = unique(goal$X.Type.of.skill.))
+})
+
 output$plot_inter <- renderPlotly({
- 
-  seria <- My_SDG %>%
-    dplyr::filter(Goal == (input$goal),
-                  GeoAreaName %in% input$countries,
-                  SeriesDescription == input$description,
-                  X.Age. == input$group,
-                  X.Cities. == input$group,
-                  X.Education.level. == input$group,
-                  X.Freq. == input$group,
-                  X.Hazard.type. == input$group,
-                  X.Level.Status. == input$group,
-                  X.Migratory.status. == input$group,
-                  X.Mode.of.transportation. == input$group,
-                  X.Name.of.international.institution. == input$group,
-                  X.Name.of.non.communicable.disease. == input$group,
-                  X.Tariff.regime..status.. == input$group,
-                  X.Type.of.skill. == input$group,
-                  X.Type.of.speed. == input$group,
-                  X.Type.of.product. == input$group2,
-                  X.Sex. == input$group2) %>% group_by(X.Age.,
-                                                       X.Cities.,
-                                                       X.Education.level.,
-                                                       X.Hazard.type.,
-                                                       X.Level.Status.,
-                                                       X.Migratory.status.,
-                                                       X.Mode.of.transportation.,
-                                                       X.Name.of.international.institution.,
-                                                       X.Name.of.non.communicable.disease.,
-                                                       X.Tariff.regime..status..,
-                                                       X.Type.of.skill.,
-                                                       X.Type.of.speed.)
+ # dla zmiennej age and sex
+  if(input$img_1 == T) {
+    seria <- My_SDG %>%
+      dplyr::filter(Goal == (input$goal),
+                    GeoAreaName %in% input$countries,
+                    SeriesDescription == input$description,
+                    X.Age. == input$group,
+                    X.Sex. == input$group2)
+    # dla city wybieranie stolicy
+  } else if (input$img_2 == T) {
+    seria <- My_SDG %>%
+      dplyr::filter(Goal == (input$goal),
+                    GeoAreaName %in% input$countries,
+                    SeriesDescription == input$description,
+                    X.Age. == input$group,
+                    X.Bounds. == input$group2) 
+  } else if (input$img_3 == T) {
+    seria <- My_SDG %>%
+      dplyr::filter(Goal == (input$goal),
+                    GeoAreaName %in% input$countries,
+                    SeriesDescription == input$description,
+                    X.Age. == input$group,
+                    X.Sex.. == input$group2) 
+  } else if (input$img_4 == T) {
+    seria <- My_SDG %>%
+      dplyr::filter(Goal == (input$goal),
+                    GeoAreaName %in% input$countries,
+                    SeriesDescription == input$description,
+                    X.Type.of.skill. == input$skill,
+                    X.Age. == input$group,
+                    X.Sex. == input$group2) 
+  } else if (input$img_6 == T) {
+    seria <- My_SDG %>%
+      dplyr::filter(Goal == (input$goal),
+                    GeoAreaName %in% input$countries,
+                    SeriesDescription == input$description,
+                    X.Age. == input$group,
+                    X.Location. == input$group2) 
+  }
+  
+  progress1 <- shiny::Progress$new()
+  on.exit(progress1$close())
+  progress1$set(message = "waiting", value = 0)
   
   p <- plotly::plot_ly(data = seria,
                   y = ~Value,
-                  x = ~TimePeroid,
-                  color = ~GeaAreaName,
+                  x = ~TimePeriod,
+                  color = ~GeoAreaName,
                   type = "scatter",
                   mode = "line+markers") %>%
     layout(title = input$description,
            xaxis=list(range=c(1990,2018),
                       title = "Time"),
-           ysxis = list(title = "Value"))
-  
+           yaxis = list(title = "Value"))
+  n <- 5
+  for (i in 1:n) {
+    progress1$inc(1/n, detail = "loading", i)
+    Sys.sleep(0.1)
+  }
   plot$plot <- p
   
   p
-  
+
 })
 # funkcja która ma zapisywać wykres do bazy danych wykresów które będą dodane do quizu
 # z powodów technicznych i braku dostępu do zewnętrznej bazy danych nie mogliśmy zaimlementować funkcji zapisu wykresów
@@ -161,23 +198,68 @@ output$save <- downloadHandler(
  # wyświetlenie u Ui wykresó wybranych przez użytkownika wyświetlrnie wyktesu kolumnowego
 output$plot_bar_inter <- renderPlotly({
   
-  seria_2 <- goal_df %>% 
-    dplyr::filter(Goal == (input$goal),
-                  Country %in% input$countries,
-                  Description == input$description)#
+  # dla zmiennej age and sex
+  if(input$img_1 == T) {
+    seria_2 <- My_SDG %>%
+      dplyr::filter(Goal == (input$goal),
+                    GeoAreaName %in% input$countries,
+                    SeriesDescription == input$description,
+                    X.Age. == input$group,
+                    X.Sex. == input$group2)
+    # dla city wybieranie stolicy
+  } else if (input$img_2 == T) {
+    seria_2 <- My_SDG %>%
+      dplyr::filter(Goal == (input$goal),
+                    GeoAreaName %in% input$countries,
+                    SeriesDescription == input$description,
+                    X.Age. == input$group,
+                    X.Bounds. == input$group2) 
+  } else if (input$img_3 == T) {
+    seria_2 <- My_SDG %>%
+      dplyr::filter(Goal == (input$goal),
+                    GeoAreaName %in% input$countries,
+                    SeriesDescription == input$description,
+                    X.Age. == input$group,
+                    X.Sex.. == input$group2) 
+  } else if (input$img_4 == T) {
+    seria_2 <- My_SDG %>%
+      dplyr::filter(Goal == (input$goal),
+                    GeoAreaName %in% input$countries,
+                    SeriesDescription == input$description,
+                    X.Type.of.skill. == input$skill,
+                    X.Age. == input$group,
+                    X.Sex. == input$group2) 
+  } else if (input$img_6 == T) {
+    seria_2 <- My_SDG %>%
+      dplyr::filter(Goal == (input$goal),
+                    GeoAreaName %in% input$countries,
+                    SeriesDescription == input$description,
+                    X.Age. == input$group,
+                    X.Location. == input$group2) 
+  }
+ 
  
   # miejsce tworzenia wykresów za pomocą pakiety plotly
+  progress1 <- shiny::Progress$new()
+  on.exit(progress1$close())
+  progress1$set(message = "waiting", value = 0)
+  
   plotly::plot_ly(data = seria_2,
-                  x = ~Time,
+                  x = ~TimePeriod,
                   y = ~Value,
-                  color = ~Country,
+                  color = ~GeoAreaName,
                   type = "bar",
-                  mode = "markers") %>% 
+                  mode = "marker") %>% 
     layout(title = input$description,
            xaxis=list(range=c(1990,2018),
                       title = "Time"),
-           ysxis = list(title = "Value")
+           yaxis = list(title = "Value")
     )
+  n <- 5
+  for (i in 1:n) {
+    progress1$inc(1/n, detail = "loading", i)
+    Sys.sleep(0.1)
+  }
   
 })
 # testowy wykres właściwe wykresy to liniowy i kolumnowy
