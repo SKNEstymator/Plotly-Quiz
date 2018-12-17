@@ -12,7 +12,7 @@ library(shinyjs)
 library(openxlsx)
 library(jsonlite)
 library(shinyalert)
-have_ip()
+#have_ip()
 #readRDS("Baza_danych.rds")
 
 pyt <- read.xlsx(xlsxFile = "Pytania.xlsx",
@@ -24,7 +24,7 @@ pyt <- read.xlsx(xlsxFile = "Pytania.xlsx",
 
 all_fun <- function() {
 ## pobieracnie celu 1 
-No_poverty <- fromJSON("https://unstats.un.org/SDGAPI/v1/sdg/Indicator/Data?indicator=1.1.1&pageSIze=9454")
+No_poverty <- fromJSON("https://unstats.un.org/SDGAPI/v1/sdg/Indicator/Data?indicator=1.1.1&pageSize=9454")
 Target_2 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=1.2&pageSize=732')
 Target_3 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=1.3&pageSize=2403')
 ## pobieranie celu 2
@@ -55,7 +55,85 @@ finall$Time <- round(as.numeric(as.character(finall$Time)),1)
 
 return(finall)
 }
+ 
+My_SDG <- readRDS("My_SDG.rds")
+My_SDG <- My_SDG %>%
+  mutate_at(.vars = vars(X.Age.,#
+                         X.Bounds.,
+                         X.Cities.,
+                         X.Education.level.,#
+                         X.Freq.,#
+                         X.Hazard.type.,#
+                         X.IHR.Capacity.,
+                         X.Level.Status.,#
+                         X.Location.,
+                         X.Migratory.status.,#
+                         X.Mode.of.transportation.,
+                         X.Name.of.international.institution.,
+                         X.Name.of.non.communicable.disease.,
+                         X.Sex.,
+                         X.Tariff.regime..status..,
+                         X.Type.of.mobile.technology.,
+                         X.Type.of.occupation.,
+                         X.Type.of.product.,
+                         X.Type.of.skill.,
+                         X.Type.of.speed.), .funs = as.character)
 
+BD <- tidyr::gather(My_SDG, key, group_value, X.Age., X.Bounds., X.Cities., X.Education.level., X.Freq., X.Hazard.type.,
+                                               X.IHR.Capacity.,
+                                               X.Level.Status.,
+                                               X.Location.,
+                                               X.Migratory.status.,
+                                               X.Mode.of.transportation.,
+                                               X.Name.of.international.institution.,
+                                               X.Name.of.non.communicable.disease.,
+                                               X.Sex.,
+                                               X.Tariff.regime..status..,
+                                               X.Type.of.mobile.technology.,
+                                               X.Type.of.occupation.,
+                                               X.Type.of.product.,
+                                               X.Type.of.skill.,
+                                               X.Type.of.speed.)
+
+BD_2 <- BD %>% select(Goal,SeriesDescription,GeoAreaName,TimePeriod,Value,key,group_value)
+# unique(as.character(My_SDG$X.Sex.))
+# unique(as.character(My_SDG$X.Age.))
+# unique(as.character(My_SDG$X.Bounds.))
+#unique(as.character(My_SDG$X.Education.level.))
+# unique(as.character(levels(My_SDG$X.Sex.))[My_SDG$X.Sex.])
+# unique(as.character(levels(My_SDG$X.Age.))[My_SDG$X.Age.])
+# unique(as.character(levels(My_SDG$X.Bounds.))[My_SDG$X.Bounds.])
+# unique(as.character(levels(My_SDG$X.Education.level.))[My_SDG$X.Education.level.])
 
 
 #goal_df <- all_fun()
+
+
+
+
+
+
+# library(dplyr)
+# 
+# Dane <- Grupy %>% slice(1:100)
+# testXD <- My_SDG %>% sample_n(100)
+# official <- tidyr::gather(testXD, key, value, X.Age., X.Bounds., X.Cities., X.Education.level., X.Freq., X.Hazard.type.,
+#                           X.IHR.Capacity.,
+#                           X.Level.Status.,
+#                           X.Location.,
+#                           X.Migratory.status.,
+#                           X.Mode.of.transportation.,
+#                           X.Name.of.international.institution.,
+#                           X.Name.of.non.communicable.disease.,
+#                           X.Sex.,
+#                           X.Tariff.regime..status..,
+#                           X.Type.of.mobile.technology.,
+#                           X.Type.of.occupation.,
+#                           X.Type.of.product.,
+#                           X.Type.of.skill.,
+#                           X.Type.of.speed.
+#                           )
+# asd <-  official %>% filter(value != "", !is.na(value))
+# 
+# 
+# test <- tidyr::gather(Dane, key, value, X.Sex., X.Age.) 

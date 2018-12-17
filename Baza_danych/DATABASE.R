@@ -10,17 +10,18 @@ have_ip <- function() {
 }
 
 all_fun1 <- function() {
-  ## pobieracnie celu 1
+  ## funkcja sprawdzająca czy jest połączenie z internetem i czy jest podany dobry link
   if(have_ip() == T) {
     
     tryCatch({
-  No_poverty <- fromJSON("https://unstats.un.org/SDGAPI/v1/sdg/Indicator/Data?indicator=1.1.1&pageSIze=9454")
+      # ponieranie celu 1 z API ONZ w formacie JSON
+  No_poverty <- fromJSON("https://unstats.un.org/SDGAPI/v1/sdg/Indicator/Data?indicator=1.1.1&pageSize=9454")
   Target_2 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=1.2&pageSize=732')
   Target_3 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=1.3&pageSize=2403')
-  Target_4 <-  fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Indicator/Data?indicator=1.5.2&pageSIze=36222')
-  Target_5 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Indicator/Data?indicator=1.5.1&pageSIze=30160')
+  Target_4 <-  fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Indicator/Data?indicator=1.5.2&pageSize=36222')
+  Target_5 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Indicator/Data?indicator=1.5.1&pageSize=30160')
   Target_6 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=1.a&pageSize=1819')
-  indicator_1.5.4 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Indicator/Data?indicator=1.5.4&pageSIze=135')
+  indicator_1.5.4 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Indicator/Data?indicator=1.5.4&pageSize=135')
     },error = function(e) {
       warning("You used bad link!")
     })
@@ -33,6 +34,7 @@ all_fun1 <- function() {
   if(have_ip() == T) {
     
     tryCatch({
+      # ponieranie celu 2 z API ONZ w formacie JSON
   Zero_hunger <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=2.1&pageSize=4632')
   Target_2.2 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=2.2&pageSize=2453')
   Target_2.5 <- fromJSON("https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=2.5&pageSize=25990")
@@ -51,6 +53,7 @@ all_fun1 <- function() {
   if(have_ip() == T) {
     
     tryCatch({
+      # ponieranie celu 3 z API ONZ w formacie JSON
   Good_health <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=3.1&pageSize=12324')
   Target_3.2 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=3.2&pageSize=2453')
   Target_3.3 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=3.3&pageSize=30528')
@@ -76,6 +79,7 @@ all_fun1 <- function() {
   if(have_ip() == T) {
     
     tryCatch({
+      # ponieranie celu 4 z API ONZ w formacie JSON
   Education <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=4.1&pageSize=3870')
   Target_4.2 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=4.2&pageSize=5243')
   Target_4.3 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=4.3&pageSize=273')
@@ -97,6 +101,7 @@ all_fun1 <- function() {
   if(have_ip() == T) {
     
     tryCatch({
+      # ponieranie celu 5 z API ONZ w formacie JSON
   Gender_equality <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=5.2&pageSize=442')
   Target_5.2 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=5.3&pageSize=391')
   Target_5.3 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=5.4&pageSize=5640')
@@ -115,6 +120,7 @@ all_fun1 <- function() {
   if(have_ip() == T) {
     
     tryCatch({
+      # ponieranie celu 6 z API ONZ w formacie JSON
   Clean_water <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=6.1&pageSize=3395')
   Target_6.2 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=6.2&pageSize=14481')
   Target_6.3 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=6.3&pageSize=131')
@@ -135,6 +141,7 @@ all_fun1 <- function() {
   if(have_ip() == T) {
     
     tryCatch({
+      # ponieranie celu 7 z API ONZ w formacie JSON
   Clean_energy <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=7.1&pageSize=12216')
   Target_7.2 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=7.2&pageSize=4032')
   Target_7.3 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=7.3&pageSize=3438')
@@ -150,6 +157,7 @@ all_fun1 <- function() {
   if(have_ip() == T) {
     
     tryCatch({
+      # ponieranie celu 8 z API ONZ w formacie JSON
   Work_and_ekonomi <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=8.1&pageSize=3395')
   Target_8.2 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=8.2&pageSize=14481')
   Target_8.3 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=8.3&pageSize=131')
@@ -172,6 +180,7 @@ all_fun1 <- function() {
   if(have_ip() == T) {
     
     tryCatch({
+      # ponieranie celu 9 z API ONZ w formacie JSON
   Industry <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=9.1&pageSize=1197')
   Target_9.2 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=9.2&pageSize=10101')
   Target_9.3 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=9.3&pageSize=810')
@@ -192,6 +201,7 @@ all_fun1 <- function() {
   if(have_ip() == T) {
     
     tryCatch({
+      # ponieranie celu 10 z API ONZ w formacie JSON
   Reduce_ineqality <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=10.1&pageSize=188')
   Target_10.2 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=10.4&pageSize=750')
   Target_10.3 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=10.6&pageSize=28380')
@@ -210,6 +220,7 @@ all_fun1 <- function() {
   if(have_ip() == T) {
     
     tryCatch({
+      # ponieranie celu 11 z API ONZ w formacie JSON
   Cities <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=11.1&pageSize=298')
   Target_11.2 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=11.5&pageSize=132246') #########
   Target_11.3 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=11.6&pageSize=655')
@@ -226,6 +237,7 @@ all_fun1 <- function() {
   if(have_ip() == T) {
     
     tryCatch({
+      # ponieranie celu 12 z API ONZ w formacie JSON
   Responsible_consumption <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=12.2&pageSize=347058') #######
   Target_12.2 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=12.4&pageSize=841')
     },error = function(e) {
@@ -240,6 +252,7 @@ all_fun1 <- function() {
   if(have_ip() == T) {
     
     tryCatch({
+      # ponieranie celu 13 z API ONZ w formacie JSON
   Climate <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=13.1&pageSize=89838') ######
     },error = function(e) {
       warning("You used bad link!")
@@ -253,6 +266,7 @@ all_fun1 <- function() {
   if(have_ip() == T) {
     
     tryCatch({
+      # ponieranie celu 14 z API ONZ w formacie JSON
   Below_water <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=14.4&pageSize=25')
   Target_14.2 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=14.5&pageSize=12503') #########
   Target_14.3 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=14.a&pageSize=86')
@@ -268,6 +282,7 @@ all_fun1 <- function() {
   if(have_ip() == T) {
     
     tryCatch({
+      # ponieranie celu 15 z API ONZ w formacie JSON
   Belowa_land <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=15.1&pageSize=1197')
   Target_15.2 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=15.2&pageSize=10101')
   Target_15.3 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=15.4&pageSize=810')
@@ -287,6 +302,7 @@ all_fun1 <- function() {
   if(have_ip() == T) {
     
     tryCatch({
+      # ponieranie celu 16 z API ONZ w formacie JSON
   Peaca_andJustice <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=16.1&pageSize=1920')
   Target_16.2 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=16.2&pageSize=459')
   Target_16.3 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=16.3&pageSize=296')
@@ -307,6 +323,7 @@ all_fun1 <- function() {
   if(have_ip() == T) {
     
     tryCatch({
+      # ponieranie celu 17 z API ONZ w formacie JSON
   Partnership_for_goals <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=17.2&pageSize=1920')
   Target_17.2 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=17.3&pageSize=459')
   Target_17.3 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=17.4&pageSize=296')
@@ -327,7 +344,8 @@ all_fun1 <- function() {
   } else {
     warning("You lost connection to internet!")
   }
-  # tworzenie ramki danych
+  
+    # tworzenie ramki danych dla wszystkich celów
   # cel 1
   Goal1_df <- as.data.frame(matrix(unlist(No_poverty$data), nrow = nrow(No_poverty$data))) 
   Tg_1_2_df <- as.data.frame(matrix(unlist(Target_2$data), nrow = nrow(Target_2$data))) 
@@ -457,7 +475,7 @@ all_fun1 <- function() {
   tg_17_12_df <- as.data.frame(matrix(unlist(Target_17.12$data), nrow = nrow(Target_17.12$data)))
   tg_17_13_df <- as.data.frame(matrix(unlist(Target_17.13$data), nrow = nrow(Target_17.13$data)))
   
-
+# łączenie wszystkich ramek danych w jedną bazę danych za pomocą funkcji rbind
   finall <- rbind(Goal1_df,Tg_1_2_df,tg_1_3_df,tg_1_4_df,tg_1_5_df,tg_1_6_df,tg_2_2_df,tg_2_3_df,tg_2_4_df,
                   tg_2_5_df,tg_2_6_df,tg_3_2_df,tg_3_2_df,tg_3_3_df,tg_3_4_df,tg_3_5_df,tg_3_6_df,tg_3_7_df,
                   tg_3_8_df,tg_3_9_df,tg_3_10_df,tg_3_11_df,tg_3_12_df,tg_3_13_df,tg_4_1_df,tg_4_2_df,tg_4_3_df,
@@ -469,46 +487,14 @@ all_fun1 <- function() {
                   tg_12_2_df,tg_13_1_df,tg_14_1_df,tg_14_2_df,tg_14_3_df,tg_15_1_df,tg_16_1_df,tg_16_2_df,tg_16_3_df,tg_16_4_df,
                   tg_16_5_df,tg_16_6_df,tg_16_7_df,tg_16_8_df,tg_17_1_df,tg_17_2_df,tg_17_3_df,tg_17_4_df,tg_17_5_df,tg_17_6_df,
                   tg_17_7_df,tg_17_8_df,vtg_17_9_df,tg_17_10_df,tg_17_11_df,tg_17_12_df,tg_17_13_df)
-
+# wyświetl obiekt finall
   return(finall)
 }
-
+# wywołanie funkcji all_fun1 i przypisanie do zmiennej test_opt
 test_opt <- all_fun1()
 
-saveRDS(test_opt, "Baza_danych")
+# zapisanie pibranych danych do formatu RDS w celu zmniejszenia rozmiaru i przyspieszenia ładowania apki
+saveRDS(test_opt, "Baza_danych.rds")
 
+# zamiana wartości w kolumnie value z factor na numeric
 My_SDG <- My_SDG %>% mutate(Value = as.numeric(levels(Value))[Value])
-
-# dane <- My_SDG %>% select(Goal,
-#                        SeriesCode,
-#                        SeriesDescription,
-#                        GeoAreaCode,
-#                        GeoAreaName,
-#                        TimePeriod,
-#                        Value,
-#                        X.Age.,
-#                        X.Sex.,
-#                        X.Cities.,
-#                        X.Education.level.,
-#                        X.Hazard.type.,
-#                        X.Mode.of.transportation.,
-#                        X.Type.of.mobile.technology.,
-#                        X.Level.Status.,
-#                        X.Type.of.product.,
-#                        X.Type.of.speed.,
-#                        X.Tariff.regime..status..,
-#                        X.Type.of.occupation.,
-#                        X.T)
-# 
-# dane <- dane %>% mutate(group = c(
-#                                   X.Age.,
-#                                   X.Cities.,
-#                                   X.Education.level.,
-#                                   X.Hazard.type.,
-#                                   X.Mode.of.transportation.,
-#                                   X.Type.of.mobile.technology.,
-#                                   X.Level.Status.,
-#                                   X.Type.of.product.,
-#                                   X.Type.of.speed.))
-# 
-# write.xlsx(clr, file = "grupowanie.xlsx")
