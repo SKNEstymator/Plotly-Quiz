@@ -20,54 +20,20 @@ pyt <- read.xlsx(xlsxFile = "Pytania.xlsx",
   mutate(praw=as.logical(praw)) %>%
   mutate(plot_img=as.logical(plot_img))
 
-## funkcja pobierająca dane z api SDG 
-
-all_fun <- function() {
-## pobieracnie celu 1 
-No_poverty <- fromJSON("https://unstats.un.org/SDGAPI/v1/sdg/Indicator/Data?indicator=1.1.1&pageSize=9454")
-Target_2 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=1.2&pageSize=732')
-Target_3 <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=1.3&pageSize=2403')
-## pobieranie celu 2
-Zero_hunger <- fromJSON('https://unstats.un.org/SDGAPI/v1/sdg/Target/Data?target=2.1&pageSize=4632')
-
-
-# tworzenie ramki danych
-# cel 1
-Goal1_df <- as.data.frame(matrix(unlist(No_poverty$data), nrow = nrow(No_poverty$data))) %>% select(V1,V4,V5,V7,V8,V9,V10,V17)
-Tg_2_df <- as.data.frame(matrix(unlist(Target_2$data), nrow = nrow(Target_2$data))) %>% select(V1,V4,V5,V7,V8,V9,V10,V17)
-tg_3_df <-  as.data.frame(matrix(unlist(Target_3$data), nrow = nrow(Target_3$data))) %>% select(V1,V4,V5,V7,V8,V9,V10,V17)
-# cel 2
-Goal2_df <- as.data.frame(matrix(unlist(Zero_hunger$data), nrow = nrow(Zero_hunger$data))) %>% select(V1,V4,V5,V7,V8,V9,V10,V17)
-
-
-finall <- rbind(Goal1_df,Tg_2_df,tg_3_df,Goal2_df)
-finall$V10 <- round(as.numeric(as.character(finall$V10)),2)
-colnames(finall) <- c("Goal",
-                       "Series",
-                       "Description",
-                       "Geo_ID",
-                       "Country",
-                       "Time",
-                       "Value",
-                      "Group")
-
-finall$Time <- round(as.numeric(as.character(finall$Time)),1)
-
-return(finall)
-}
- 
+# wczytujemy zapisaną baze danych  
 My_SDG <- readRDS("My_SDG.rds")
+# zamiana wartości zmiennych grupujących z factor na character
 My_SDG <- My_SDG %>%
-  mutate_at(.vars = vars(X.Age.,#
+  mutate_at(.vars = vars(X.Age.,
                          X.Bounds.,
                          X.Cities.,
-                         X.Education.level.,#
-                         X.Freq.,#
-                         X.Hazard.type.,#
+                         X.Education.level.,
+                         X.Freq.,
+                         X.Hazard.type.,
                          X.IHR.Capacity.,
-                         X.Level.Status.,#
+                         X.Level.Status.,
                          X.Location.,
-                         X.Migratory.status.,#
+                         X.Migratory.status.,
                          X.Mode.of.transportation.,
                          X.Name.of.international.institution.,
                          X.Name.of.non.communicable.disease.,
@@ -78,7 +44,7 @@ My_SDG <- My_SDG %>%
                          X.Type.of.product.,
                          X.Type.of.skill.,
                          X.Type.of.speed.), .funs = as.character)
-
+# użycie funkcji gather w celu stworzenia jednej kolumny ze zmiennymi grupującymi 
 BD <- tidyr::gather(My_SDG, key, group_value, X.Age., X.Bounds., X.Cities., X.Education.level., X.Freq., X.Hazard.type.,
                                                X.IHR.Capacity.,
                                                X.Level.Status.,
@@ -94,46 +60,7 @@ BD <- tidyr::gather(My_SDG, key, group_value, X.Age., X.Bounds., X.Cities., X.Ed
                                                X.Type.of.product.,
                                                X.Type.of.skill.,
                                                X.Type.of.speed.)
-
+# selekcja wartości na te które są potrzebne do tworzenia wykresów 
 BD_2 <- BD %>% select(Goal,SeriesDescription,GeoAreaName,TimePeriod,Value,key,group_value)
-# unique(as.character(My_SDG$X.Sex.))
-# unique(as.character(My_SDG$X.Age.))
-# unique(as.character(My_SDG$X.Bounds.))
-#unique(as.character(My_SDG$X.Education.level.))
-# unique(as.character(levels(My_SDG$X.Sex.))[My_SDG$X.Sex.])
-# unique(as.character(levels(My_SDG$X.Age.))[My_SDG$X.Age.])
-# unique(as.character(levels(My_SDG$X.Bounds.))[My_SDG$X.Bounds.])
-# unique(as.character(levels(My_SDG$X.Education.level.))[My_SDG$X.Education.level.])
-
-
-#goal_df <- all_fun()
-
-
-
-
-
-
-# library(dplyr)
-# 
-# Dane <- Grupy %>% slice(1:100)
-# testXD <- My_SDG %>% sample_n(100)
-# official <- tidyr::gather(testXD, key, value, X.Age., X.Bounds., X.Cities., X.Education.level., X.Freq., X.Hazard.type.,
-#                           X.IHR.Capacity.,
-#                           X.Level.Status.,
-#                           X.Location.,
-#                           X.Migratory.status.,
-#                           X.Mode.of.transportation.,
-#                           X.Name.of.international.institution.,
-#                           X.Name.of.non.communicable.disease.,
-#                           X.Sex.,
-#                           X.Tariff.regime..status..,
-#                           X.Type.of.mobile.technology.,
-#                           X.Type.of.occupation.,
-#                           X.Type.of.product.,
-#                           X.Type.of.skill.,
-#                           X.Type.of.speed.
-#                           )
-# asd <-  official %>% filter(value != "", !is.na(value))
-# 
-# 
-# test <- tidyr::gather(Dane, key, value, X.Sex., X.Age.) 
+# zmiana wartości zmiennej Value na numeryczną 
+as.numeric(BD_2$Value)

@@ -37,14 +37,14 @@ sidebarLayout(
         uiOutput("description"),
         # wyświetlenie opcji wyboru kraju w panelu edukacja
         uiOutput("countries"),
-    
+        # wyświetlenie opcji wyboru zmiennej grupującej w panelu edukacja
         uiOutput("group"),
-        
+        # wyświetlenie opcji wyboru zmiennej grupującej w panelu edukacja
         uiOutput("group2"),
-        
-        uiOutput("city"),
-        
-        uiOutput("skill"),
+        # wyświetlenie opcji wyboru wartości zmiennej w panelu edukacja
+        uiOutput("value"),
+        # wyświetlenie opcji wyboru wartości zmiennej w panelu edukacja
+        uiOutput("value2"),
         # pola wyboru opcji wykresu line , bar, scatter
         radioButtons(
           inputId = "chartType",
@@ -68,11 +68,12 @@ sidebarLayout(
   
   
   mainPanel(
-    # miejsce wyświetlenia wyboru wykresu 
+    # miejsce wyświetlania opcji wyboru wykresu line
     conditionalPanel(
       condition = "input.chartType == 'line'",
       plotlyOutput("plot_inter")
     ),
+    # miejsce wyświetlania opcji wyboru wykresu bar
     conditionalPanel(
       condition = "input.chartType == 'bar'",
       plotlyOutput("plot_bar_inter")
